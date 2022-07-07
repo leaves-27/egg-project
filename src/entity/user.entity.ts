@@ -22,4 +22,12 @@ export class UserEntity {
     length: 64,
   })
   password: string | null;
+
+  @Column({
+    name: 'deleted',
+    nullable: true,
+    comment: '是否删除',
+    length: 64,
+  })
+  deleted: boolean;
 }
