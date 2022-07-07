@@ -8,9 +8,9 @@ export default (appInfo: MidwayAppInfo) => {
     egg: {
       port: 7001,
     },
-    // security: {
-    //   csrf: false,
-    // },
+    security: {
+      csrf: false,
+    },
     orm: {
       type: "sqlite",
       database: ":memory:",
@@ -18,6 +18,23 @@ export default (appInfo: MidwayAppInfo) => {
       entities: [UserEntity],
       synchronize: true,
       logging: false,
+    },
+    // jwt: {
+    //   secret: 'xxxxxxxxxxxxxx', // fs.readFileSync('xxxxx.key')
+    //   expiresIn: '2d', // https://github.com/vercel/ms
+    // },
+    cors: {
+      credentials: false,
+      allowMethods: ['GET','POST','OPTIONS'],
+      origin: '*',
+      allowHeaders: ['Content-Type'],
+      // credentials: false,
+      // exposeHeaders: string |string[];
+      // keepHeadersOnError: boolean;
+    },
+    jsonp: {
+      callback: 'jsonp',
+      limit: 512,
     },
   } as MidwayConfig;
 };
