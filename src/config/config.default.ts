@@ -12,17 +12,20 @@ export default (appInfo: MidwayAppInfo) => {
       csrf: false,
     },
     orm: {
-      type: "sqlite",
-      database: ":memory:",
-      dropSchema: true,
+      type: 'mysql',
+      host: 'localhost',
+      port: 3306,
+      username: 'root',
+      password: 'a1896806b',
+      database: 'user',
       entities: [UserEntity],
-      synchronize: true,
+      synchronize: true,     // 如果第一次使用，不存在表，有同步的需求可以写 true
       logging: false,
     },
-    // jwt: {
-    //   secret: 'xxxxxxxxxxxxxx', // fs.readFileSync('xxxxx.key')
-    //   expiresIn: '2d', // https://github.com/vercel/ms
-    // },
+    jwt: {
+      secret: 'kk', // fs.readFileSync('xxxxx.key')
+      expiresIn: '2d', // https://github.com/vercel/ms
+    },
     cors: {
       credentials: false,
       allowMethods: ['GET','POST','OPTIONS'],

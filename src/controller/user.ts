@@ -1,40 +1,48 @@
-import { Inject, Controller, Post, Body } from '@midwayjs/decorator';
-// import { Inject, Controller, Get } from '@midwayjs/decorator';
-// import { JwtService } from '@midwayjs/jwt';
+import { Provide, Inject, Controller, Post, Body, Get, Query } from '@midwayjs/decorator';
+import { JwtService } from '@midwayjs/jwt';
 import { Context } from '@midwayjs/web';
 
-// import { IGetUserResponse } from '../interface';
-// import { UserService } from '../service/user';
-// import { UserModel } from '../model/user.model';
+import { UserModel } from '../model/user.model';
 import { UserLoginDTO } from '../dto/user.dto';
 import { Validate } from '@midwayjs/validate';
+import { httpError } from '@midwayjs/core';
 
+// 登录、注册、列表展示
+// 获取列表信息
+@Provide()
 @Controller('/api/user')
 export class APIUserController {
   @Inject()
   ctx: Context;
 
-  // @Inject()
-  // userService: UserService;
+  @Inject()
+  userModel: UserModel;
 
-  // @Inject()
-  // userModel: UserModel;
+  @Inject()
+  jwtService: JwtService;
 
-  // @Inject()
-  // jwt: JwtService;
-
-  // @Get('/get_user')
-  // async m(){
-  //   return 'hello info';
-  // }
-
-  
   @Post('/login')
   @Validate()
-  userLogin(@Body() userLogin: UserLoginDTO) {
-    console.log('=======userLogin:', userLogin);
-    const token = "xx";
-    // 对输入数据进行校验，然后去数据库匹配，匹配到，则生成token。
-    return { success: true, message: 'OK', data: token };
+  async userLogin(@Body() userLogin: UserLoginDTO) {
+    const user = await this.userModel.getUserByUsernameAndPassword(userLogin.userName, userLogin.password);
+    if(user) {
+      const { jwt } = this.ctx.app.config;
+      const token = await this.jwtService.sign({
+        ...user
+      }, jwt.secret, {
+        expiresIn: jwt.expiresIn
+      });
+      // 对输入数据进行校验，然后去数据库匹配，匹配到，则生成token。
+      return { success: true, message: 'OK', data: token };
+    }
+
+    throw new httpError.UnauthorizedError();
   }
+
+  @Get('/register')
+  async addUser(@Query() user: UserLoginDTO) {
+    await this.userModel.addUser(user.userName, user.password);
+    return { success: true, message: 'OK', data: '插入用户成功' };
+  }
+
 }

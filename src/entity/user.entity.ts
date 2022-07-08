@@ -1,5 +1,7 @@
+import { EntityModel } from '@midwayjs/orm';
 import { PrimaryGeneratedColumn, Column } from 'typeorm';
 
+@EntityModel()
 export class UserEntity {
   @PrimaryGeneratedColumn({
     type: 'int',
@@ -13,7 +15,7 @@ export class UserEntity {
     comment: '用户名',
     length: 64,
   })
-  username: string;
+  userName: string;
 
   @Column('varchar', {
     name: 'password',
@@ -27,7 +29,6 @@ export class UserEntity {
     name: 'deleted',
     nullable: true,
     comment: '是否删除',
-    length: 64,
   })
   deleted: boolean;
 }

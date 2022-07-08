@@ -11,9 +11,11 @@
     "@midwayjs/jwt": "^3.3.11",
     "@midwayjs/mock": "^3.0.0",
     "@midwayjs/orm": "^3.3.6",
+    "@midwayjs/typegoose": "^3.3.5",
     "@midwayjs/validate": "^3.3.11",
     "@midwayjs/web": "^3.0.0",
-    "egg": "^2.0.0"
+    "egg": "^2.0.0",
+    "mysql2": "^2.3.3"
   },
   "devDependencies": {
     "@midwayjs/cli": "^1.0.0",

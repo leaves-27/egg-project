@@ -1,7 +1,9 @@
+import { Provide } from '@midwayjs/decorator';
 import { InjectEntityModel } from '@midwayjs/orm';
 import { Repository } from 'typeorm';
 import { UserEntity } from '../entity/user.entity';
 
+@Provide()
 export class UserModel {
   // 添加用户信息
   // 删除用户信息
@@ -16,7 +18,7 @@ export class UserModel {
    */
   async addUser(username: string, password: string){
     let userEntity = new UserEntity();
-    userEntity.username = username;
+    userEntity.userName = username;
     userEntity.password = password;
     this.userRepo.save(userEntity);
   }
@@ -26,10 +28,12 @@ export class UserModel {
    * @param username {String} 用户名
    * @param password {String} 用户密码
    */
-  async getUserByUsernameAndPassword(username: string, password: string): Promise<UserEntity> {
+  async getUserByUsernameAndPassword(userName: string, password: string): Promise<UserEntity> {
+    console.log('=====userName:', userName)
+    console.log('=====password:', password)
     return await this.userRepo.findOne({
       where: {
-        username,
+        userName,
         password
       }
     });
@@ -47,7 +51,7 @@ export class UserModel {
       }
     });
     
-    originUser.username = username;
+    originUser.userName = username;
     this.userRepo.save(originUser);
   }
 
