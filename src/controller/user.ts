@@ -36,7 +36,7 @@ export class APIUserController {
       return { success: true, message: 'OK', data: token };
     }
 
-    throw new httpError.UnauthorizedError();
+    return { success: false, message: 'Cancel' };
   }
 
   @Get('/register')
