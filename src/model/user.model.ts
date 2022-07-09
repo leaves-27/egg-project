@@ -29,8 +29,6 @@ export class UserModel {
    * @param password {String} 用户密码
    */
   async getUserByUsernameAndPassword(userName: string, password: string): Promise<UserEntity> {
-    console.log('=====userName:', userName)
-    console.log('=====password:', password)
     return await this.userRepo.findOne({
       where: {
         userName,
