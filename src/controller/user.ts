@@ -23,9 +23,7 @@ export class APIUserController {
   @Post('/login')
   @Validate()
   async userLogin(@Body() userLogin: UserLoginDTO) {
-    console.log('=========userLogin:', userLogin)
     const user = await this.userModel.getUserByUsernameAndPassword(userLogin.userName, userLogin.password);
-    console.log('=========user:', user)
     if(user) {
       const { jwt } = this.ctx.app.config;
       const token = await this.jwtService.sign({

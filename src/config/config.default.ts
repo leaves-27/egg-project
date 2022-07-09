@@ -30,7 +30,7 @@ export default (appInfo: MidwayAppInfo) => {
       credentials: false,
       allowMethods: ['GET','POST','OPTIONS'],
       origin: '*',
-      allowHeaders: ['Content-Type'],
+      allowHeaders: ['Content-Type','authorization'],
       // credentials: false,
       // exposeHeaders: string |string[];
       // keepHeadersOnError: boolean;
