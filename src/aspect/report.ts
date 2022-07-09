@@ -9,7 +9,6 @@ export class ReportInfo implements IMethodAspect {
   jwtService: JwtService;
     
   async before(point: JoinPoint) {
-    console.log('==========aspect');
       // login接口请求，生成token.其他接口验证token
     const { ctx } = point.target;
     // 判断下有没有校验信息
