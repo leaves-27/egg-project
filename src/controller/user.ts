@@ -5,7 +5,6 @@ import { Context } from '@midwayjs/web';
 import { UserModel } from '../model/user.model';
 import { UserLoginDTO } from '../dto/user.dto';
 import { Validate } from '@midwayjs/validate';
-import { httpError } from '@midwayjs/core';
 
 // 登录、注册、列表展示
 // 获取列表信息
@@ -24,7 +23,9 @@ export class APIUserController {
   @Post('/login')
   @Validate()
   async userLogin(@Body() userLogin: UserLoginDTO) {
+    console.log('=========userLogin:', userLogin)
     const user = await this.userModel.getUserByUsernameAndPassword(userLogin.userName, userLogin.password);
+    console.log('=========user:', user)
     if(user) {
       const { jwt } = this.ctx.app.config;
       const token = await this.jwtService.sign({
@@ -36,7 +37,7 @@ export class APIUserController {
       return { success: true, message: 'OK', data: token };
     }
 
-    return { success: false, message: 'Cancel' };
+    return { success: true , message: 'Cancel', data: null };
   }
 
   @Get('/register')
