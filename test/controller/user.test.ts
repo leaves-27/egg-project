@@ -29,7 +29,7 @@ describe("test/controller/user.test.ts POST /api/user/login", () => {
     expect(result.status).toBe(200);
     const json = JSON.parse(result.text);
     expect(json.success).toBe(true);
-    // expect(json.data).toBe(null); //非空字符串
+    expect(typeof json.data).toBe('string'); //非空字符串
   });
   it("should POST /api/user/login 密码输入不匹配", async () => {
     // case2_1: 密码不匹配
@@ -43,7 +43,7 @@ describe("test/controller/user.test.ts POST /api/user/login", () => {
 
     const json = JSON.parse(result.text);
     expect(json.success).toBe(false);
-    expect(json.data).toBe(null);
+    expect(json.data).toBeNull();
   });
 
   it("should POST /api/user/login 用户名输入不匹配", async () => {
