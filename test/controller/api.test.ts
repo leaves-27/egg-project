@@ -29,14 +29,14 @@ describe("test/controller/api.test.ts", () => {
     const { text: userInfoText } = await createHttpRequest(app)
       .get("/api/auth/get_user")
       .set('authorization', `Bearer ${token}`)
-      .query({ uid: '00001' })
+      .query({ uid: '12345678901' })
     const userInfo = JSON.parse(userInfoText);
 
     // use expect by jest
     expect(userInfo.success).toBe(true);
     expect(userInfo.message).toBe("OK");
     expect(userInfo.data).toEqual({
-      uid: '00001',
+      uid: '12345678901',
       username: 'mockedName',
       phone: '12345678901',
       email: 'xxx.xxx@xxx.com',

@@ -1,10 +1,10 @@
 import { Provide, Inject, Controller, Post, Body, Get, Query } from '@midwayjs/decorator';
 import { JwtService } from '@midwayjs/jwt';
 import { Context } from '@midwayjs/web';
+import { Validate } from '@midwayjs/validate';
 
 import { UserModel } from '../model/user.model';
 import { UserLoginDTO } from '../dto/user.dto';
-import { Validate } from '@midwayjs/validate';
 
 // 登录、注册、列表展示
 // 获取列表信息
