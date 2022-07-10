@@ -43,4 +43,12 @@ describe("test/controller/api.test.ts", async () => {
     // use expect by jest
     expect(result.status).toBe(422);
   });
+
+  it("GET /api/auth/get_user 请求头不正确", async () => {
+    const result = await createHttpRequest(app)
+      .get("/api/auth/get_user")
+
+    // use expect by jest
+    expect(result.status).toBe(401);
+  });
 });
