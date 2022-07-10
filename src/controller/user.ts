@@ -35,7 +35,7 @@ export class APIUserController {
       return { success: true, message: 'OK', data: token };
     }
 
-    return { success: true , message: 'Cancel', data: null };
+    return { success: false , message: 'Cancel', data: null };
   }
 
   @Get('/register')
