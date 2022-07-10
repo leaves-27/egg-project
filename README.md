@@ -30,5 +30,6 @@ $ npm stop
 [midway]: https://midwayjs.org
 
 # issue
-1.测试套件和测试用例的区分
+1.登录POST请求改为GET
+2.泛型的理解
 

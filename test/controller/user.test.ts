@@ -22,7 +22,8 @@ describe("test/controller/user.test.ts", ()=>{
     it("用户名和密码输入均正确", async () => {
       // case1: 登录成功
       const result = await createHttpRequest(app)
-      .post("/api/user/login").send({ 
+      .get("/api/user/login")
+      .query({ 
         userName: 'jack',
         password: 'testtest' 
       });
@@ -34,7 +35,8 @@ describe("test/controller/user.test.ts", ()=>{
     it("密码输入不匹配,即是未注册的用户", async () => {
       // case2_1: 密码不匹配
       const result = await createHttpRequest(app)
-      .post("/api/user/login").send({ 
+      .get("/api/user/login")
+      .query({ 
         userName: 'jack',
         password: 'test11' 
       });
@@ -49,7 +51,8 @@ describe("test/controller/user.test.ts", ()=>{
     it("用户名输入不匹配,即是未注册的用户", async () => {
       // case2_2: 用户名不匹配
       const result = await createHttpRequest(app)
-      .post("/api/user/login").send({ 
+      .get("/api/user/login")
+      .query({ 
         userName: 'jack1',
         password: 'testtest' 
       });
@@ -63,7 +66,8 @@ describe("test/controller/user.test.ts", ()=>{
     it("输入密码长度少于6位", async () => {
       // case3_1: 密码长度少于6位
       const result = await createHttpRequest(app)
-      .post("/api/user/login").send({ 
+      .get("/api/user/login")
+      .query({ 
         userName: 'jack',
         password: 'test' 
       })
@@ -73,7 +77,8 @@ describe("test/controller/user.test.ts", ()=>{
     it("输入密码长度大于8位", async () => {
       // case3_2: 密码长度大于8位
       const result = await await createHttpRequest(app)
-      .post("/api/user/login").send({ 
+      .get("/api/user/login")
+      .query({ 
         userName: 'jack',
         password: 'testtesttest' 
       })
@@ -83,7 +88,8 @@ describe("test/controller/user.test.ts", ()=>{
     it("输入用户名长度小于最小长度", async () => {
       // case3_3: 用户名长度为0
       const result = await createHttpRequest(app)
-      .post("/api/user/login").send({ 
+      .get("/api/user/login")
+      .query({ 
         userName: '',
         password: 'testtest' 
       })
@@ -92,8 +98,8 @@ describe("test/controller/user.test.ts", ()=>{
     it("输入用户名长度大于最大长度", async () => {
       // case3_4: 用户名长度为80
       const result = await createHttpRequest(app)
-      .post("/api/user/login")
-      .send({ 
+      .get("/api/user/login")
+      .query({ 
         userName: 'jackjackjackjackjackjackjackjackjackjackjackjackjackjackjackjackjackjackjackjack',
         password: 'testtest' 
       })

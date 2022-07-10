@@ -1,4 +1,4 @@
-import { Provide, Inject, Controller, Post, Body } from '@midwayjs/decorator';
+import { Provide, Inject, Controller, Get, Post, Body, Query } from '@midwayjs/decorator';
 import { JwtService } from '@midwayjs/jwt';
 import { Context } from '@midwayjs/web';
 import { Validate } from '@midwayjs/validate';
@@ -20,9 +20,9 @@ export class APIUserController {
   @Inject()
   jwtService: JwtService;
 
-  @Post('/login')
+  @Get('/login')
   @Validate()
-  async userLogin(@Body() userLogin: UserLoginDTO) {
+  async userLogin(@Query() userLogin: UserLoginDTO) {
     const user = await this.userModel.getUserByUsernameAndPassword(userLogin.userName, userLogin.password);
     if(user) {
       const { jwt } = this.ctx.app.config;
