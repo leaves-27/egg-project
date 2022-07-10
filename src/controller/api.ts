@@ -1,7 +1,10 @@
 import { Inject, Controller, Get, Query } from '@midwayjs/decorator';
 import { Context } from 'egg';
+import { Validate } from '@midwayjs/validate';
+
 import { IGetUserResponse } from '../interface';
 import { UserService } from '../service/user';
+import { ApiDTO } from '../dto/api.dto';
 
 @Controller('/api/auth')
 export class AuthController {
@@ -12,7 +15,9 @@ export class AuthController {
   userService: UserService;
 
   @Get('/get_user')
-  async getUser(@Query('uid') uid: string): Promise<IGetUserResponse> {
+  @Validate()
+  async getUser(@Query() query: ApiDTO): Promise<IGetUserResponse> {
+    const { uid } = query;
     const user = await this.userService.getUser({ uid });
     return { success: true, message: 'OK', data: user };
   }

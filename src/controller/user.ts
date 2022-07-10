@@ -1,10 +1,10 @@
-import { Provide, Inject, Controller, Post, Body, Get, Query } from '@midwayjs/decorator';
+import { Provide, Inject, Controller, Post, Body } from '@midwayjs/decorator';
 import { JwtService } from '@midwayjs/jwt';
 import { Context } from '@midwayjs/web';
+import { Validate } from '@midwayjs/validate';
 
 import { UserModel } from '../model/user.model';
 import { UserLoginDTO } from '../dto/user.dto';
-import { Validate } from '@midwayjs/validate';
 
 // 登录、注册、列表展示
 // 获取列表信息
@@ -35,13 +35,18 @@ export class APIUserController {
       return { success: true, message: 'OK', data: token };
     }
 
-    return { success: true , message: 'Cancel', data: null };
+    return { success: false , message: 'Cancel', data: null };
   }
 
-  @Get('/register')
-  async addUser(@Query() user: UserLoginDTO) {
-    await this.userModel.addUser(user.userName, user.password);
-    return { success: true, message: 'OK', data: '插入用户成功' };
+  @Post('/register')
+  @Validate()
+  async addUser(@Body() registerUser: UserLoginDTO) {
+    const user = await this.userModel.getUserByUsernameAndPassword(registerUser.userName, registerUser.password);
+    if(user) {
+      return { success: false, message: '当前用户已经存在', data: null };
+    }
+    await this.userModel.addUser(registerUser.userName, registerUser.password);
+    return { success: true, message: '插入用户成功', data: null };
   }
 
 }
